@@ -32,4 +32,8 @@ sum(r in rooms, t in teachers, c in classes, l in lessons)
   forall( t in teachers, c in classes) 
   sum(r in rooms, l in lessons)
      schedule[r][t][c][l] == teacherClassRelation[t][c];
+     
+  forall( t in teachers, l in lessons)   
+  	sum(r in rooms, c in classes) 
+  		schedule[r][t][c][l] == 1;
 }  

@@ -13,7 +13,10 @@ int teacherClassRelation [teachers][classes] = ...;
 int classLessonRelation [classes][lessons] = ...;
 int teacherLessonRelation [teachers][lessons] = ...;
 
+dvar int sumClaases[teachers][lessons] ;
+
 dvar int schedule [rooms][teachers][classes][lessons] in 0..1;
+ 		
 
 maximize 
 sum(r in rooms, t in teachers, c in classes, l in lessons)
@@ -23,17 +26,24 @@ sum(r in rooms, t in teachers, c in classes, l in lessons)
 {
  forall(
  	r in rooms, 
- 	t in teachers : roomTeachersRelation[r][t] == 0, 
- 	c in classes : teacherClassRelation[t][c] == 0, 
- 	l in lessons : classLessonRelation[c][l] == 0 && teacherLessonRelation[t][l] == 0
+ 	t in teachers, 
+ 	c in classes, 
+ 	l in lessons 
  	)
-   schedule[r][t][c][l] == 0;
+ 	if(roomTeachersRelation[r][t] == 0 || teacherClassRelation[t][c] == 0 || classLessonRelation[c][l] == 0 || teacherLessonRelation[t][l] == 0)
+ 	{
+   		schedule[r][t][c][l] == 0;
+   }   		
    
   forall( t in teachers, c in classes) 
   sum(r in rooms, l in lessons)
      schedule[r][t][c][l] == teacherClassRelation[t][c];
-     
+     /*
   forall( t in teachers, l in lessons)   
   	sum(r in rooms, c in classes) 
-  		schedule[r][t][c][l] == 1;
+  		schedule[r][t][c][l] <= 1;
+  		*/
+  		
+  	forall( t in teachers, l in lessons)   
+  			sumClaases[t][l] == ( sum(r in rooms, c in classes)  schedule[r][t][c][l] ) ;
 }  

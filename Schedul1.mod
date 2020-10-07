@@ -16,6 +16,9 @@ int teacherLessonRelation [teachers][lessons] = ...;
 dvar int TeacherLessonResult[teachers][lessons] ;
 dvar int ClassLessonResult[classes][lessons] ;
 dvar int RoomLessonResult[rooms][lessons];
+dvar int TeacherClassResult [teachers][classes];
+dvar int RoomClassResult [rooms][classes];
+dvar int RoomTeacherResult [rooms][teachers];
 
 dvar int schedule [rooms][teachers][classes][lessons] in 0..1;
  		
@@ -41,6 +44,9 @@ sum(r in rooms, t in teachers, c in classes, l in lessons)
 	forall( t in teachers, c in classes) 
 		sum(r in rooms, l in lessons)
 			schedule[r][t][c][l] == teacherClassRelation[t][c];   
+			
+	forall( t in teachers, c in classes) 		
+		TeacherClassResult[t][c] == sum(r in rooms, l in lessons) schedule[r][t][c][l];
 	     
 	 // room - lesson relations
 	 forall(r in rooms, l in lessons)
@@ -64,5 +70,13 @@ sum(r in rooms, t in teachers, c in classes, l in lessons)
 	  		schedule[r][t][c][l] <= 1;
 	  		
 	forall( c in classes, l in lessons )  
-		ClassLessonResult [c][l]== ( sum(r in rooms, t in teachers)  schedule[r][t][c][l] ) ;
+		ClassLessonResult [c][l] == ( sum(r in rooms, t in teachers)  schedule[r][t][c][l] ) ;
+		
+	//
+	forall( r in rooms, c in classes) 
+		RoomClassResult[r][c]  == ( sum(l in lessons, t in teachers)  schedule[r][t][c][l] ) ;
+		
+	//
+	forall( r in rooms, t in teachers) 
+	RoomTeacherResult[r][t] == ( sum(l in lessons, c in classes)  schedule[r][t][c][l] ) ;
 }  

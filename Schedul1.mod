@@ -20,12 +20,18 @@ dvar int TeacherClassResult [teachers][classes];
 dvar int RoomClassResult [rooms][classes];
 dvar int RoomTeacherResult [rooms][teachers];
 
+
 dvar int schedule [rooms][teachers][classes][lessons] in 0..1;
  		
 
-maximize 
-sum(r in rooms, t in teachers, c in classes, l in lessons)
-   schedule[r][t][c][l] * roomTeachersRelation[r][t];
+minimize 
+staticLex(	
+ sum(c in classes, l in lessons) (  ClassLessonResult [c][l] * l  )
+,
+sum(r in rooms, t in teachers, c in classes, l in lessons) schedule[r][t][c][l] * roomTeachersRelation[r][t]
+   )
+;
+
 
  subject to
 {
@@ -70,7 +76,10 @@ sum(r in rooms, t in teachers, c in classes, l in lessons)
 	  		schedule[r][t][c][l] <= 1;
 	  		
 	forall( c in classes, l in lessons )  
-		ClassLessonResult [c][l] == ( sum(r in rooms, t in teachers)  schedule[r][t][c][l] ) ;
+	{
+		ClassLessonResult [c][l] == ( sum(r in rooms, t in teachers)  schedule[r][t][c][l] ) ;	
+	}
+	
 		
 	//
 	forall( r in rooms, c in classes) 

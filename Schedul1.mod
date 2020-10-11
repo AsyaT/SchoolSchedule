@@ -27,6 +27,8 @@ dvar int schedule [rooms][teachers][classes][lessons] in 0..1;
 minimize 
 staticLex(	
  sum(c in classes, l in lessons) (  ClassLessonResult [c][l] * l  )
+   ,
+sum(t in teachers, l in lessons) (  TeacherLessonResult [t][l] * l  )
 ,
 sum(r in rooms, t in teachers, c in classes, l in lessons) schedule[r][t][c][l] * roomTeachersRelation[r][t]
    )

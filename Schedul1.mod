@@ -5,6 +5,7 @@
  *********************************************/
 {string} rooms = ...;
 {string} teachers = ...;
+{string} foreignLangTecher = ...;
 {string} classes = ...;
 {int} lessons = ...;
 
@@ -74,8 +75,12 @@ sum(r in rooms, t in teachers, c in classes, l in lessons) schedule[r][t][c][l] 
 	  			
 	  	// class - lesson relations
 	forall( c in classes, l in lessons )   
-	  	sum(r in rooms, t in teachers) 
+	  	sum(r in rooms, t in teachers : t not in foreignLangTecher) 
 	  		schedule[r][t][c][l] <= 1;
+	  		
+	forall( c in classes, l in lessons )   
+	  	sum(r in rooms, t in teachers : t in foreignLangTecher) 
+	  		schedule[r][t][c][l] <= 2;
 	  		
 	forall( c in classes, l in lessons )  
 	{

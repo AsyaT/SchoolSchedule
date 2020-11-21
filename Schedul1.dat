@@ -8,7 +8,7 @@
  
  teachers = {"ivanova", "petrova_en", "sidorova_ge", "shumova", "trudovik_m", "trudovik_w", "stoprtteacher"};
  
- foreignLangTechers = {"petrova_en", "sidorova_ge"};
+ foreignLangTeachers = {"petrova_en", "sidorova_ge"};
  
  trudyTeachers = {"trudovik_m", "trudovik_w"};
  

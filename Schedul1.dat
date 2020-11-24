@@ -12,6 +12,10 @@
  
  trudyTeachers = {"trudovik_m", "trudovik_w"};
  
+ informaticsTeachers = {"trudovik_m", "trudovik_w"};
+ 
+ sportTeachers = {"trudovik_m", "trudovik_w"};
+ 
  classes = {"5a", "5b", "6a", "6b", "7a", "7b", "8a", "8b", "9a", "9b","10a", "10b", "11a", "11b"};
  
  // day,  shift, lesson number

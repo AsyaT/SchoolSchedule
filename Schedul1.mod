@@ -7,6 +7,8 @@
 {string} teachers = ...;
 {string} foreignLangTeachers = ...;
 {string} trudyTeachers = ...;
+{string} informaticsTeachers = ...;
+{string} sportTeachers = ...;
 {string} classes = ...;
 {int} lessons = ...;
 
@@ -89,6 +91,22 @@ sum(r in rooms, t in teachers, c in classes, l in lessons) schedule[r][t][c][l] 
 	  		
 	forall( c in classes, l in lessons )   
 	  	sum(r in rooms, t in teachers : t in trudyTeachers) 
+	  		schedule[r][t][c][l] <= 2;
+	  		
+	forall( c in classes, l in lessons )   
+	  	sum(r in rooms, t in teachers : t not in informaticsTeachers) 
+	  		schedule[r][t][c][l] <= 1;
+	  		
+	forall( c in classes, l in lessons )   
+	  	sum(r in rooms, t in teachers : t in informaticsTeachers) 
+	  		schedule[r][t][c][l] <= 2;
+	  		
+	forall( c in classes, l in lessons )   
+	  	sum(r in rooms, t in teachers : t not in sportTeachers) 
+	  		schedule[r][t][c][l] <= 1;
+	  		
+	forall( c in classes, l in lessons )   
+	  	sum(r in rooms, t in teachers : t in sportTeachers) 
 	  		schedule[r][t][c][l] <= 2;
 	  		
 	forall( c in classes, l in lessons )  
